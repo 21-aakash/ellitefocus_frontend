@@ -5,6 +5,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../components/context/AuthContext'; // Adjust the path as needed
 
+
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+
 function EditTodo() {
   const { id } = useParams();
   const [description, setDescription] = useState('');
@@ -15,7 +18,7 @@ function EditTodo() {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const response = await axios.get(`/api/todos/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/api/todos/${id}`);
         const { description, isComplete } = response.data;
         setDescription(description);
         setIsComplete(isComplete);
@@ -35,7 +38,7 @@ function EditTodo() {
   }, [id]);
 
   const updateTodo = (id, description, isComplete, user) => {
-    axios.put(`/api/todos/${id}`, { description, isComplete, userId: user.id })
+    axios.put(`${API_BASE_URL}/api/todos/${id}`, { description, isComplete, userId: user.id })
       .then(response => {
         toast.success('Todo updated successfully');
         setTimeout(() => {
