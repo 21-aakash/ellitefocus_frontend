@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for Toastify
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
+
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app/"; // Define API_BASE_URL here
+
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,8 +26,7 @@ function Register() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Valid email
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Min 8 chars, 1 special char, 1 uppercase, 1 number
 
-const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app/";
-    
+
     if (!name.match(namePattern)) {
       newErrors.name = 'Name must contain only alphabets and spaces.';
     }
