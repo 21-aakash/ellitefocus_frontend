@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNow } from 'date-fns';
 
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+
 
 function Index() {
   const { user } = useAuth(); // Get user info from context
@@ -31,7 +33,7 @@ function Index() {
     console.log("user", user);
     console.log("Fetching todos for user ID:", user.id);
     // Fetch todos for the logged-in user
-    axios.get(`/api/todos/user/${user.id}`)
+    axios.get(`${API_BASE_URL}/api/todos/user/${user.id}`)
       .then(response => {
         setTodos(response.data);
         console.log("Todos received:", response.data);
@@ -43,7 +45,7 @@ function Index() {
   }, [user, navigate]);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/todos/${id}`)
+    axios.delete(`${API_BASE_URL}/api/todos/${id}`)
       .then(() => {
         setTodos(todos.filter(todo => todo.id !== id));
         toast.success('Todo deleted successfully');
