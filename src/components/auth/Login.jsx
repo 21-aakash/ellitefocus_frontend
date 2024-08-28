@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TailSpin } from 'react-loader-spinner'; // Correct import for the loader
 
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+
 function Login() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -19,7 +21,7 @@ function Login() {
     setLoading(true); // Start loading
 
     try {
-      const response = await axios.post('/api/users/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/login`, {
         email,
         password
       }, {
