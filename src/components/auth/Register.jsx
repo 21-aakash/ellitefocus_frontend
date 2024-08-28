@@ -23,6 +23,8 @@ function Register() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Valid email
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Min 8 chars, 1 special char, 1 uppercase, 1 number
 
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app/";
+    
     if (!name.match(namePattern)) {
       newErrors.name = 'Name must contain only alphabets and spaces.';
     }
@@ -51,7 +53,7 @@ function Register() {
       setIsLoading(true); // Start loading
 
       axios
-        .post('/api/users/register', { name, email, password })
+        .post(`${API_BASE_URL}/api/users/register`, { name, email, password })
         .then((response) => {
           // Handle successful registration
           console.log('Register done', response);
