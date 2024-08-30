@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import back from '../assets/BACK.jpg'; // Import your background image
+import back from '../assets/logo.jpg'; // Import your background image
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
