@@ -21,23 +21,10 @@ const Hero = () => {
     <div className="relative">
 
       
-{/*       <div
+      <div
         className="absolute inset-0 -z-10 bg-cover bg-center"
         style={{ backgroundImage: `url(${back})` }}
-      ></div> */}
-
-     
-            <img   className="absolute inset-0 -z-10 bg-cover bg-center"
-                src={back}
-                alt="Hero Background"
-                onLoad={() => setIsLoaded(true)}
-                style={{ display: isLoaded ? 'block' : 'none' }}
-            />
-            {!isLoaded && <div className="loader">Loading...</div>}
-        
-
-
-      
+      ></div>
 
       <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-4 py-6 md:px-6 lg:px-8 lg:py-12 relative">
         {/* Left Side: Lottie Animation */}
