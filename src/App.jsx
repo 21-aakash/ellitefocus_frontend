@@ -49,7 +49,7 @@ function App() {
           <CustomCursor />
           <Navbar />
           {/* Main Content */}
-          <div className="flex-grow container mx-auto p-4"style={{ margin: '0', padding: '0', border: 'none' }} >
+          <div className="flex-grow container mx-auto h-screen p-4"style={{ margin: '0', padding: '0', border: 'none' }} >
             <Routes>
               <Route path="/" element={<Hero/>} /> {/* Default hero section */}
 
