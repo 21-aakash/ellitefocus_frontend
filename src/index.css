@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 *{
     margin: 0;
@@ -29,7 +29,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Outfit, Helvetica, sans-serif; */
+    font-family: "Outfit", sans-serif;
 }
+
+
+
+.react-calendar-heatmap .color-scale-low { fill: #55e426; }
+
+.react-calendar-heatmap .color-scale-mid { fill: #44a340; }
+.react-calendar-heatmap .color-scale-high { fill: #1e6823; }
+.react-calendar-heatmap .color-empty { fill: #9daeb7; }
 
 
