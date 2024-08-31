@@ -13,55 +13,49 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
+const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function Index() {
   const { user } = useAuth();
   const [todos, setTodos] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortDirection, setSortDirection] = useState('asc'); // 'asc' for ascending, 'desc' for descending
   const navigate = useNavigate();
   const ref = useRef(null); // Reference for drag constraints
 
-  
   useEffect(() => {
     if (!user) {
-      console.log("user noe found", user)
       navigate('/login');
       return;
     }
-    axios.get(`/api/todos/user/${user.id}`)
+    axios.get(`${API_BASE_URL}/api/todos/user/${user.id}`)
       .then(response => setTodos(response.data))
       .catch(error => toast.error('Error fetching todos'));
   }, [user, navigate]);
 
+  // Calculate counts
+  const pendingCount = todos.filter(todo => todo.isComplete === null).length;
+  const doneCount = todos.filter(todo => todo.isComplete === true).length;
 
   const handleStatusChange = (id, newStatus) => {
-    const updatedTodos = Array.isArray(todos) ? todos.map(todo =>
+    const updatedTodos = todos.map(todo =>
       todo.id === id ? { ...todo, isComplete: newStatus } : todo
-    ) : [];
+    );
     setTodos(updatedTodos);
   };
 
   const handleDelete = (id) => {
-    axios.delete(`/api/todos/${id}`)
+   axios.delete(`${API_BASE_URL}/api/todos/${id}`)
       .then(() => {
-        setTodos(prevTodos => Array.isArray(prevTodos) ? prevTodos.filter(todo => todo.id !== id) : []);
+        setTodos(todos.filter(todo => todo.id !== id));
         toast.success('Todo deleted successfully');
       })
-      .catch(error => {
-        console.error('Error deleting todo:', error);
-        toast.error('Error deleting todo');
-      });
+      .catch(error => toast.error('Error deleting todo'));
   };
 
-  const dates = Array.isArray(todos) ? [...new Set(todos.map(todo => new Date(todo.createdAt).toLocaleDateString()))] : [];
-  const completedTodosByDate = dates.map(date => 
-    Array.isArray(todos) ? todos.filter(todo => todo.isComplete && new Date(todo.createdAt).toLocaleDateString() === date).length : 0
-  );
-  const pendingTodosByDate = dates.map(date => 
-    Array.isArray(todos) ? todos.filter(todo => !todo.isComplete && new Date(todo.createdAt).toLocaleDateString() === date).length : 0
-  );
+  const dates = [...new Set(todos.map(todo => new Date(todo.createdAt).toLocaleDateString()))]; // Unique dates
+  const completedTodosByDate = dates.map(date => todos.filter(todo => todo.isComplete && new Date(todo.createdAt).toLocaleDateString() === date).length);
+  const pendingTodosByDate = dates.map(date => todos.filter(todo => !todo.isComplete && new Date(todo.createdAt).toLocaleDateString() === date).length);
 
   const chartData = {
     labels: dates,
@@ -104,126 +98,115 @@ function Index() {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyfVutx1L9LX19cD3xXITzLfB9St39BnJ7o_M5FvfrGWjotHe47W4HtPI00EU8-AifX-g&usqp=CAU'
   ];
 
-  const pendingCount = Array.isArray(todos) ? todos.filter(todo => todo.isComplete === null).length : 0;
-  const doneCount = Array.isArray(todos) ? todos.filter(todo => todo.isComplete === true).length : 0;
-
-  const filteredAndSortedTodos = Array.isArray(todos)
-    ? todos
-        .filter(todo =>
-          todo.description.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .sort((a, b) => {
-          const dateA = new Date(a.createdAt);
-          const dateB = new Date(b.createdAt);
-          return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-        })
-    : [];
-
   return (
     <div className='relative w-full h-auto bg-gray-900 text-gray-300'>
       <ToastContainer />
-      <div className='flex flex-col md:flex-row justify-between items-center p-4 md:p-8'></div>
-
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 m-14 mt-0'>
-        <div className='flex flex-col md:flex-row w-full gap-6'>
-          <div className='bg-gradient-to-br from-white to-yellow-100 bg-white bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg w-full md:w-1/2 flex items-center'>
-            <i className='fas fa-tasks text-xl md:text-2xl text-gray-700 mr-4'></i>
-            <div>
-              <h2 className='text-lg md:text-xl font-bold text-gray-800'>Pending Tasks: {pendingCount}</h2>
+      <div className='flex flex-col md:flex-row justify-between items-center p-4 md:p-8'>
+        {/* User Profile Section */}
+        {user && (
+          <div className="flex items-center space-x-4 ml-6 p-4 mb-4 md:mb-0">
+            <div className="relative w-16 h-16">
+              <div className="w-full h-full rounded-full overflow-hidden">
+                <img
+                  src={avatars[Math.floor(Math.random() * avatars.length)]}
+                  alt="User Avatar"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="font-semibold text-lg uppercase">Hi {user.name}!</p>
+              <p className="text-sm">{user.email}</p>
             </div>
           </div>
+        )}
 
-          <div className='bg-gradient-to-br from-white to-green-200 bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg w-full md:w-1/2 flex items-center'>
-            <i className='fas fa-check-circle text-xl md:text-2xl text-gray-700 mr-4'></i>
-            <div>
-              <h2 className='text-lg md:text-xl font-bold text-gray-800'>Completed Tasks: {doneCount}</h2>
-            </div>
-          </div>
-        </div>
-
-        <div className='bg-gray-900 bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg flex justify-between items-center'>
-          <div className='flex justify-center'>
-            <a className='text-sm inline-block bg-green-600 text-neutral-200 px-4 py-2 rounded hover:bg-green-700' href='/create-todo'>
-              Create Task +
-            </a>
-          </div>
-          <button
-            onClick={exportToExcel}
-            className='text-sm bg-blue-600 text-neutral-200 px-4 py-2 rounded hover:bg-blue-700 flex items-center'
-          >
-            <FontAwesomeIcon icon={faDownload} className='mr-2' />
-            Download Report
-          </button>
-        </div>
-
-        <div className='bg-gray-900 bg-opacity-50 backdrop-blur-md p-4 rounded-lg shadow-lg'>
-          <Activity todos={todos} />
-        </div>
-
-        <div className='bg-gray-900 bg-opacity-50 backdrop-blur-md p-4 rounded-lg shadow-lg'>
-          <div className='w-full max-w-full lg:max-w-2xl'>
-            <Line data={chartData} options={{
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top',
-                },
-                title: {
-                  display: true,
-                  text: 'Todo Efficiency Over Time',
-                },
-              },
-              scales: {
-                x: {
-                  title: {
-                    display: true,
-                    text: 'Date',
-                  },
-                },
-                y: {
-                  title: {
-                    display: true,
-                    text: 'Number of Todos',
-                  },
-                  min: 0,
-                  ticks: {
-                    stepSize: 1,
-                  },
-                },
-              },
-            }} />
-          </div>
+        <div className='text-center md:text-right'>
+          <h1 className='text-2xl md:text-3xl font-bold text-slate-200'>Focus Dashboard</h1>
+          <h6 className='text-slate-200'>Stay on track</h6>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center m-12 mb-2 gap-4">
-        <input
-          type="text"
-          placeholder="Search todos..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full sm:w-auto border bg-gray-900 border-x-gray-700 p-1 rounded"
-        />
+      {/* Slab boxes */}
+      <div className='flex flex-col md:flex-row justify-around mt-6 space-y-4 md:space-y-0'>
+        <div className='bg-yellow-400 text-gray-900 p-4 rounded-lg shadow-md w-64 md:w-auto mx-auto'>
+          <h2 className='text-xl font-bold text-center'>Pending Tasks</h2>
+          <p className='text-2xl font-semibold text-center'>{pendingCount}</p>
+        </div>
+        <div className='bg-green-400 text-gray-900 p-4 rounded-lg shadow-md w-64 md:w-auto mx-auto'>
+          <h2 className='text-xl font-bold text-center'>Done Tasks</h2>
+          <p className='text-2xl font-semibold text-center'>{doneCount}</p>
+        </div>
+      </div>
+
+      <div className='mt-8 px-4'>
+        <Activity todos={todos} />
+      </div>
+
+      <div className='flex justify-center mt-8'>
         <button
-          onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
-          className="w-full sm:w-auto inline-block px-2 py-1 text-gray-300 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg font-medium rounded-md transition-all"
+          onClick={exportToExcel}
+          className='text-sm inline-block bg-blue-600 text-neutral-200 px-4 py-2 rounded hover:bg-blue-700 flex items-center'
         >
-          Sort by Date {sortDirection === 'asc' ? '▲' : '▼'}
+          <FontAwesomeIcon icon={faDownload} className='mr-2' />
+          Download Report
         </button>
       </div>
 
-      <hr className="my-6" />
+      <div className='flex justify-center mt-10 px-4'>
+        <div className='w-full max-w-full lg:max-w-4xl'>
+          <Line data={chartData} options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Todo Efficiency Over Time',
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Date',
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Number of Todos',
+                },
+                min: 0,
+                ticks: {
+                  stepSize: 1,
+                },
+              },
+            },
+          }} />
+        </div>
+      </div>
 
-      <div ref={ref} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
+      <hr className='my-6' />
+
+      <div className='flex justify-center'>
+        <a className='text-sm inline-block bg-green-600 text-neutral-200 px-4 py-2 rounded hover:bg-green-700' href='/create-todo'>
+          Create Task +
+        </a>
+      </div>
+
+     <div ref={ref} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
         {Array.isArray(todos) && todos.length > 0 ? (
-          filteredAndSortedTodos.map((item) => (
+          todos.map(item => (
             <div
               key={item.id}
               className={`rounded-lg shadow-lg ${item.isComplete ? 'bg-green-300' : 'bg-yellow-300'}`}
             >
               <div className='rounded-lg text-gray-100 p-4 border shadow-sm bg-cyan-950'>
                 <div className='flex justify-between items-center mb-2'>
-                  <h3 className='text-lg font-semibold'>{item.description}</h3>
+                  <h3 className='text-lg font-semibold'>{item.description
+                  }</h3>
                   <div className='flex space-x-2'>
                     <button
                       onClick={() => navigate(`/edit/${item.id}`)}
