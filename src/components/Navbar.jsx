@@ -21,8 +21,8 @@ function Navbar() {
             alt="Logo" 
             className="h-8 inline-block mr-2" 
           />
-          <a href="/" className="text-2xl font-bold text-white">
-            EliteFocus™
+          <a href="/" className="text-2xl text-neutral-300 text-white">
+            eliteFocus™
           </a>
         </div>
         
