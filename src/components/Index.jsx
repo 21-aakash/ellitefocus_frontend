@@ -100,19 +100,19 @@ function Index() {
 
 //states
 
-const [searchQuery, setSearchQuery] = useState('');
-const [sortDirection, setSortDirection] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+const pendingCount = Array.isArray(todos) ? todos.filter(todo => todo.isComplete === null).length : 0;
+const doneCount = Array.isArray(todos) ? todos.filter(todo => todo.isComplete === true).length : 0;
 
+const filteredAndSortedTodos = Array.isArray(todos)
+  ? todos.filter((todo) =>
+      todo.description.toLowerCase().includes(searchQuery.toLowerCase())
+    ).sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+    })
+  : [];
 
-const filteredAndSortedTodos = todos
-  .filter((todo) =>
-    todo.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-  .sort((a, b) => {
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-  });
 
 
 
