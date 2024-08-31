@@ -7,8 +7,8 @@ function Footer() {
         <div className="flex flex-wrap justify-between">
           {/* Company Info */}
           <div className="w-full sm:w-1/3 text-center sm:text-left mb-6">
-            <h2 className="text-xl font-semibold mb-2">EliteFocus</h2>
-            <p className="text-sm text-gray-400">Making life better with EliteFocus Task Assistant.</p>
+            <h2 className="text-xl font-semibold mb-2">eliteFocus</h2>
+            <p className="text-sm text-gray-400">Making life better with eliteFocus Task Assistant.</p>
             <p className="text-sm text-gray-400 mt-2">We focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
           </div>
           
@@ -26,8 +26,8 @@ function Footer() {
           {/* Contact Info */}
           <div className="w-full sm:w-1/3 text-center sm:text-right mb-6">
             <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
-            <p className="text-sm text-gray-400">123, KaamKaaj Street, Tech City</p>
-            <p className="text-sm text-gray-400">Email: support@kaamkaaj.com</p>
+            <p className="text-sm text-gray-400">123, Vijay Street, Tech City</p>
+            <p className="text-sm text-gray-400">Email: support@ellitefocus.com</p>
             <p className="text-sm text-gray-400">Phone: +1 (555) 123-4567</p>
           </div>
         </div>
@@ -41,7 +41,7 @@ function Footer() {
             <a href="#" className="mx-2 text-gray-400 hover:text-white"><i className="fab fa-instagram fa-lg"></i></a>
           </div>
 
-          <p className="text-sm text-gray-400">&copy; 2024 KaamKaaj. All Rights Reserved.</p>
+          <p className="text-sm text-gray-400">&copy; 2024 ellitefocus. All Rights Reserved.</p>
           <p className="text-sm text-gray-400 mt-2">Built with ♥ using React and Spring Boot</p>
         </div>
       </div>
