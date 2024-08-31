@@ -196,42 +196,55 @@ function Index() {
         </a>
       </div>
 
-      <div ref={ref} className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 md:p-8'>
+     <div ref={ref} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
         {Array.isArray(todos) && todos.length > 0 ? (
-          todos.map(todo => (
-            <div key={todo.id} className='bg-gray-800 text-gray-300 p-4 rounded-lg shadow-lg flex flex-col space-y-4'>
-              <h3 className='text-lg font-semibold'>{todo.title}</h3>
-              <p className='text-sm'>{todo.description}</p>
-              <div className='flex justify-between items-center'>
-                <div className='flex space-x-2'>
-                  <button
-                    className={`px-2 py-1 rounded ${
-                      todo.isComplete ? 'bg-green-500' : 'bg-yellow-500'
-                    }`}
-                    onClick={() => handleStatusChange(todo.id, !todo.isComplete)}
-                  >
-                    <FontAwesomeIcon icon={todo.isComplete ? faCheckCircle : faTimesCircle} />
-                  </button>
-                  <a
-                    className='px-2 py-1 bg-blue-500 rounded hover:bg-blue-600'
-                    href={`/edit-todo/${todo.id}`}
-                  >
-                    <FontAwesomeIcon icon={faEdit} />
-                  </a>
+          todos.map(item => (
+            <div
+              key={item.id}
+              className={`rounded-lg shadow-lg ${item.isComplete ? 'bg-green-300' : 'bg-yellow-300'}`}
+            >
+              <div className='rounded-lg text-gray-100 p-4 border shadow-sm bg-cyan-950'>
+                <div className='flex justify-between items-center mb-2'>
+                  <h3 className='text-lg font-semibold'>{item.description
+                  }</h3>
+                  <div className='flex space-x-2'>
+                    <button
+                      onClick={() => navigate(`/edit/${item.id}`)}
+                      className='text-blue-500 hover:text-blue-700'
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className='text-red-500 hover:text-red-700'
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </div>
                 </div>
-                <button
-                  className='px-2 py-1 bg-red-500 rounded hover:bg-red-600'
-                  onClick={() => handleDelete(todo.id)}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
+                <div className='text-sm text-gray-400 mb-2'>
+                  <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+                </div>
+                <p className='text-sm mb-4'>{item.details}</p>
+                <div className='flex space-x-4'>
+                  <button
+                    onClick={() => handleStatusChange(item.id, !item.isComplete)}
+                    className='bg-blue-500 text-white px-4 py-2 rounded'
+                  >
+                    {item.isComplete ? 'Mark as Pending' : 'Mark as Done'}
+                  </button>
+                </div>
+                {item.isComplete !== null && (
+                  <div className={`mt-4 text-sm ${item.isComplete ? 'text-green-600' : 'text-yellow-600'}`}>
+                    <FontAwesomeIcon icon={item.isComplete ? faCheckCircle : faTimesCircle} />{' '}
+                    {item.isComplete ? 'Completed' : 'Pending'}
+                  </div>
+                )}
               </div>
             </div>
           ))
         ) : (
-          <div className='col-span-full text-center'>
-            <p>No todos found</p>
-          </div>
+          <p className='text-center text-gray-400'>No todos available</p>
         )}
       </div>
     </div>
