@@ -44,7 +44,7 @@ function Navbar() {
             <a href="/resources" className="hover:text-yellow-300 text-gray-300 py-2 lg:py-0">Resources</a>
             <a href="/pricing" className="hover:text-yellow-300 text-gray-300 py-2 lg:py-0">Pricing</a>
             {isAuthenticated ? (
-              <button onClick={logout} className="inline-block px-2 py-1 text-gray-300 bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800  font-medium rounded-md transition-all">
+              <button onClick={logout} className="inline-block px-2 py-1 text-gray-300 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg  font-medium rounded-md transition-all">
                 Logout
               </button>
             ) : (
