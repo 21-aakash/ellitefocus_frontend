@@ -1,85 +1,61 @@
 import React from "react";
-import { useState } from "react";
 import back from '../assets/logo.jpg'; // Import your background image
 import { useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero2 = () => {
   const navigate = useNavigate(); // Hook for navigation
   const handleClick = () => {
     navigate('/register'); // Navigate to the /register route
   };
 
-  const [isLoaded, setIsLoaded] = useState(false);
-
-   
-        
-
-
-
-    
   return (
-    <div className="relative">
-
-      
+    <div className="relative h-screen overflow-hidden">
+      {/* Background Image */}
       <div
-        className="absolute inset-0 -z-10 bg-cover bg-center"
+        className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${back})` }}
       ></div>
 
-      <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-4 py-6 md:px-6 lg:px-8 lg:py-12 relative">
-        {/* Left Side: Lottie Animation */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-8 lg:mb-0">
-          <dotlottie-player
-            src="https://lottie.host/b3237743-7474-4264-bed9-2728560852aa/tZW4WKxJp1.json"
-            background="transparent"
-            speed="1"
-            style={{ width: '100%', maxWidth: '600px', height: 'auto' }}
-            loop
-            autoplay
-          ></dotlottie-player>
-        </div>
+      <div className="relative h-full flex flex-col items-center justify-center px-4 py-6 md:px-6 lg:px-8 lg:py-12 text-center">
+        
+        {/* Centered Content */}
+        <div className="max-w-2xl h-auto">
+          {/* Lottie Player */}
+        
 
-        {/* Right Side: Heading, Line, and Button */}
-        <div className="w-full lg:w-1/2 text-center lg:text-left">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat tracking-tight leading-tight text-gray-900 dark:text-white">
-            Making life better with EliteFocus😎.
+          <h4 className="text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-montserrat tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
+            Making life better with
+          </h4>
+
+          <h1 className="text-5xl  md:text-7xl lg:text-9xl font-outfit font-thin text-gray-900 dark:text-white mb-4">
+            eliteFocus<sup className="text-2xl md:text-4xl align-super">™</sup>
           </h1>
-          <div className="border-b-4 border-blue-500 w-3/4 lg:w-1/2 my-4 mx-auto lg:mx-0"></div>
-          <p className="mt-4 text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-400">
-            We focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
-          </p>
-          <div className="w-full relative mt-4">
-            <p className="text-base md:text-lg text-gray-800 font-semibold font-manrope">
-              A
-              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 ml-2 bg-no-repeat bg-bottom p-1 text-white">
-                ValueBound 
-              </span>{" "}
-             Product
-            </p>
-          </div>
 
-          <div className="flex flex-col md:flex-row gap-3 items-center mt-8">
-            <button onClick={handleClick} className="w-full md:w-auto px-6 py-3 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg">
+          <div className="border-b-4 border-blue-500 w-3/4 mx-auto my-4"></div>
+
+          <p className="mt-4 text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-4">
+            Our app's superpower? Making you look more organized than you actually are!
+          </p>
+          
+          <p className="text-sm md:text-base lg:text-lg text-gray-800 font-semibold font-manrope mb-8">
+            A
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 ml-2 bg-no-repeat bg-bottom p-1 text-white">
+              ValueBound 
+            </span>{" "}
+            Product
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-3 items-center justify-center">
+            <button onClick={handleClick} className="px-4 py-2 md:px-6 md:py-3 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg">
               Get Started
             </button>
-
-            <div className="mt-4 md:mt-0">
-              <lottie-player
-                src="https://lottie.host/c2ad9588-764e-44ac-84ae-7fe27fd049af/6IKIKho5KP.json"
-                background="transparent"
-                speed="1"
-                style={{ width: '75px', height: '75px' }}
-                loop
-                autoplay
-                direction="1"
-                mode="normal"
-              ></lottie-player>
-            </div>
           </div>
         </div>
+
+        
       </div>
     </div>
   );
 };
 
-export default Hero;
+export default Hero2;
