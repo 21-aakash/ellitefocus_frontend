@@ -44,6 +44,26 @@ function Index() {
     setTodos(updatedTodos);
   };
 
+const [searchQuery, setSearchQuery] = useState('');
+const [sortDirection, setSortDirection] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+
+
+const filteredAndSortedTodos = todos
+  .filter((todo) =>
+    todo.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+
+
+
+
+
+
+  
   const handleDelete = (id) => {
    axios.delete(`${API_BASE_URL}/api/todos/${id}`)
       .then(() => {
@@ -99,153 +119,191 @@ function Index() {
   ];
 
   return (
-    <div className='relative w-full h-auto bg-gray-900 text-gray-300'>
+    <div className='relative w-full h-auto bg-gray-900 text-gray-300' >
       <ToastContainer />
       <div className='flex flex-col md:flex-row justify-between items-center p-4 md:p-8'>
-        {/* User Profile Section */}
-        {user && (
-          <div className="flex items-center space-x-4 ml-6 p-4 mb-4 md:mb-0">
-            <div className="relative w-16 h-16">
-              <div className="w-full h-full rounded-full overflow-hidden">
-                <img
-                  src={avatars[Math.floor(Math.random() * avatars.length)]}
-                  alt="User Avatar"
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <p className="font-semibold text-lg uppercase">Hi {user.name}!</p>
-              <p className="text-sm">{user.email}</p>
-            </div>
-          </div>
-        )}
+       
 
-        <div className='text-center md:text-right'>
-          <h1 className='text-2xl md:text-3xl font-bold text-slate-200'>Focus Dashboard</h1>
-          <h6 className='text-slate-200'>Stay on track</h6>
-        </div>
+      
       </div>
 
-      {/* Slab boxes */}
-      <div className='flex flex-col md:flex-row justify-around mt-6 space-y-4 md:space-y-0'>
-        <div className='bg-yellow-400 text-gray-900 p-4 rounded-lg shadow-md w-64 md:w-auto mx-auto'>
-          <h2 className='text-xl font-bold text-center'>Pending Tasks</h2>
-          <p className='text-2xl font-semibold text-center'>{pendingCount}</p>
-        </div>
-        <div className='bg-green-400 text-gray-900 p-4 rounded-lg shadow-md w-64 md:w-auto mx-auto'>
-          <h2 className='text-xl font-bold text-center'>Done Tasks</h2>
-          <p className='text-2xl font-semibold text-center'>{doneCount}</p>
-        </div>
-      </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 m-14 mt-0'>
+ {/* Slab Boxes */}
+<div className='flex flex-col md:flex-row w-full gap-6'>
+  <div className='bg-gradient-to-br from-white to-yellow-100 bg-white bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg w-full md:w-1/2 flex items-center'>
+    <i className='fas fa-tasks text-xl md:text-2xl text-gray-700 mr-4'></i>
+    <div>
+      <h2 className='text-lg md:text-xl font-bold text-gray-800'>Pending Tasks: {pendingCount}</h2>
+      {/* <p className='text-xl md:text-2xl font-semibold text-gray-700'>{pendingCount}</p> */}
+    </div>
+  </div>
 
-      <div className='mt-8 px-4'>
-        <Activity todos={todos} />
-      </div>
+  <div className='bg-gradient-to-br from-white to-green-200 bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg w-full md:w-1/2 flex items-center'>
+    <i className='fas fa-check-circle text-xl md:text-2xl text-gray-700 mr-4'></i>
+    <div>
+      <h2 className='text-lg md:text-xl font-bold text-gray-800'>Completed Tasks: {doneCount}</h2>
+      {/* <p className='text-xl md:text-2xl font-semibold text-gray-700'>{doneCount}</p> */}
+    </div>
+  </div>
+</div>
 
-      <div className='flex justify-center mt-8'>
-        <button
-          onClick={exportToExcel}
-          className='text-sm inline-block bg-blue-600 text-neutral-200 px-4 py-2 rounded hover:bg-blue-700 flex items-center'
-        >
-          <FontAwesomeIcon icon={faDownload} className='mr-2' />
-          Download Report
-        </button>
-      </div>
 
-      <div className='flex justify-center mt-10 px-4'>
-        <div className='w-full max-w-full lg:max-w-4xl'>
-          <Line data={chartData} options={{
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top',
-              },
-              title: {
-                display: true,
-                text: 'Todo Efficiency Over Time',
-              },
-            },
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: 'Date',
-                },
-              },
-              y: {
-                title: {
-                  display: true,
-                  text: 'Number of Todos',
-                },
-                min: 0,
-                ticks: {
-                  stepSize: 1,
-                },
-              },
-            },
-          }} />
-        </div>
-      </div>
-
-      <hr className='my-6' />
-
-      <div className='flex justify-center'>
+  
+  
+  {/* Button */}
+  <div className='  bg-gray-900 bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg flex justify-between items-center'>
+    
+  <div className='flex justify-center'>
         <a className='text-sm inline-block bg-green-600 text-neutral-200 px-4 py-2 rounded hover:bg-green-700' href='/create-todo'>
           Create Task +
         </a>
       </div>
+    
+    
+    
+    <button
+      onClick={exportToExcel}
+      className='text-sm bg-blue-600 text-neutral-200 px-4 py-2 rounded hover:bg-blue-700 flex items-center'
+    >
+      <FontAwesomeIcon icon={faDownload} className='mr-2' />
+      Download Report
+    </button>
+  </div>
+
+  {/* Activity Component */}
+  <div className='bg-gray-900 bg-opacity-50 backdrop-blur-md  p-4 rounded-lg shadow-lg'>
+  
+    <Activity todos={todos} />
+  </div>
+
+  {/* Graph Component */}
+  <div className='bg-gray-900 bg-opacity-50 backdrop-blur-md  p-4 rounded-lg shadow-lg'>
+    <div className='w-full max-w-full lg:max-w-2xl'>
+      <Line data={chartData} options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Todo Efficiency Over Time',
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Number of Todos',
+            },
+            min: 0,
+            ticks: {
+              stepSize: 1,
+            },
+          },
+        },
+      }} />
+    </div>
+  </div>
+</div>
+{/*search feature */}
+<div className="flex flex-col sm:flex-row justify-between items-center m-12 mb-2 gap-4">
+  <input
+    type="text"
+    placeholder="Search todos..."s
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full sm:w-auto border bg-gray-900 border-x-gray-700 p-1 rounded"
+  />
+  <button
+    onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+    className="w-full sm:w-auto binline-block px-2 py-1 text-gray-300 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg  font-medium rounded-md transition-all
+"
+  >
+    Sort by Date {sortDirection === 'asc' ? '▲' : '▼'}
+  </button>
+</div>
+
+<hr className="my-6" />
+
+     
+
+
+
+
+
+
 
      <div ref={ref} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8'>
-        {Array.isArray(todos) && todos.length > 0 ? (
-          todos.map(item => (
-            <div
-              key={item.id}
-              className={`rounded-lg shadow-lg ${item.isComplete ? 'bg-green-300' : 'bg-yellow-300'}`}
-            >
-              <div className='rounded-lg text-gray-100 p-4 border shadow-sm bg-cyan-950'>
-                <div className='flex justify-between items-center mb-2'>
-                  <h3 className='text-lg font-semibold'>{item.description
-                  }</h3>
-                  <div className='flex space-x-2'>
-                    <button
-                      onClick={() => navigate(`/edit/${item.id}`)}
-                      className='text-blue-500 hover:text-blue-700'
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className='text-red-500 hover:text-red-700'
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </div>
-                <div className='text-sm text-gray-400 mb-2'>
-                  <span>{new Date(item.createdAt).toLocaleDateString()}</span>
-                </div>
-                <p className='text-sm mb-4'>{item.details}</p>
-                <div className='flex space-x-4'>
-                  <button
-                    onClick={() => handleStatusChange(item.id, !item.isComplete)}
-                    className='bg-blue-500 text-white px-4 py-2 rounded'
-                  >
-                    {item.isComplete ? 'Mark as Pending' : 'Mark as Done'}
-                  </button>
-                </div>
-                {item.isComplete !== null && (
-                  <div className={`mt-4 text-sm ${item.isComplete ? 'text-green-600' : 'text-yellow-600'}`}>
-                    <FontAwesomeIcon icon={item.isComplete ? faCheckCircle : faTimesCircle} />{' '}
-                    {item.isComplete ? 'Completed' : 'Pending'}
-                  </div>
-                )}
-              </div>
+    
+
+{Array.isArray(todos) && todos.length > 0 ? (
+  todos
+    .filter((todo) =>
+      todo.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+    })
+    .map((item) => (
+      <div
+        key={item.id}
+        className={`rounded-lg shadow-lg ${item.isComplete ? 'bg-green-300' : 'bg-yellow-300'}`}
+      >
+        <div className='rounded-lg text-gray-100 p-4 border shadow-sm bg-cyan-950'>
+          <div className='flex justify-between items-center mb-2'>
+            <h3 className='text-lg font-semibold'>{item.description}</h3>
+            <div className='flex space-x-2'>
+              <button
+                onClick={() => navigate(`/edit/${item.id}`)}
+                className='text-blue-500 hover:text-blue-700'
+              >
+                <FontAwesomeIcon icon={faEdit} />
+              </button>
+              <button
+                onClick={() => handleDelete(item.id)}
+                className='text-red-500 hover:text-red-700'
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
             </div>
-          ))
-        ) : (
-          <p className='text-center text-gray-400'>No todos available</p>
-        )}
+          </div>
+          <div className='text-sm text-gray-400 mb-2'>
+            <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+          </div>
+          <p className='text-sm mb-4'>{item.details}</p>
+          <div className='flex space-x-4'>
+            <button
+              onClick={() => handleStatusChange(item.id, !item.isComplete)}
+              className='bg-blue-500 text-white px-4 py-2 rounded'
+            >
+              {item.isComplete ? 'Mark as Pending' : 'Mark as Done'}
+            </button>
+          </div>
+          {item.isComplete !== null && (
+            <div className={`mt-4 text-sm ${item.isComplete ? 'text-green-600' : 'text-yellow-600'}`}>
+              <FontAwesomeIcon icon={item.isComplete ? faCheckCircle : faTimesCircle} />{' '}
+              {item.isComplete ? 'Completed' : 'Pending'}
+            </div>
+          )}
+        </div>
+      </div>
+    ))
+) : (
+  <p className='text-center text-gray-400'>No todos available</p>
+)}
+
+
+
+
       </div>
     </div>
   );
