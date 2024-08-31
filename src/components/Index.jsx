@@ -23,28 +23,18 @@ function Index() {
   const navigate = useNavigate();
   const ref = useRef(null); // Reference for drag constraints
 
+  
   useEffect(() => {
     if (!user) {
-      console.log("user not found", user);
+      console.log("user noe found", user)
       navigate('/login');
       return;
     }
     axios.get(`/api/todos/user/${user.id}`)
-      .then(response => {
-        // Validate the response
-        if (Array.isArray(response.data)) {
-          setTodos(response.data);
-        } else {
-          console.error('Unexpected data format: expected an array');
-          setTodos([]);
-          toast.error('Unexpected data format: expected an array');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching todos:', error);
-        toast.error('Error fetching todos');
-      });
+      .then(response => setTodos(response.data))
+      .catch(error => toast.error('Error fetching todos'));
   }, [user, navigate]);
+
 
   const handleStatusChange = (id, newStatus) => {
     const updatedTodos = Array.isArray(todos) ? todos.map(todo =>
