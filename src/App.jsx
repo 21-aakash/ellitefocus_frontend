@@ -1,6 +1,6 @@
 import React , {useState, useEffect}from 'react';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+
 import Index from './components/Index';
 import NewTodo from './components/NewTodo';
 import EditTodo from './components/EditTodo';
