@@ -60,9 +60,7 @@ function App() {
               <Route path="/register" element={<Register />} />
             </Routes>
           </div>
-          {/* Footer */}
-         
-          <Footer />
+          
         </div>
       </Router>
     </AuthProvider>
