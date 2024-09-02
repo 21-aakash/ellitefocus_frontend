@@ -30,7 +30,7 @@ const Hero2 = () => {
       {/* Background Image */}
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat "
-{/*         style={{ backgroundImage: `url(${back})` }} */}
+
       ></div>
 
       <div className="relative h-full flex flex-col items-center justify-center px-4 py-6 md:px-6 lg:px-8 lg:py-12 text-center">
