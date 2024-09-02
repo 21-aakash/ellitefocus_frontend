@@ -127,7 +127,7 @@ const filteredAndSortedTodos = todos
       
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-0'>
+      <div className='grid grid-cols-1 m-14 md:grid-cols-2 gap-6 mt-0'>
  {/* Slab Boxes */}
 <div className='flex flex-col md:flex-row w-full gap-6'>
   <div className='bg-gradient-to-br from-white to-yellow-100 bg-white bg-opacity-50 backdrop-blur-md border border-gray-300 p-4 rounded-lg shadow-lg w-full md:w-1/2 flex items-center'>
