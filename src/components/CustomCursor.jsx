@@ -30,7 +30,7 @@ const CustomCursor = () => {
       style={{
         height: '8px',
         width: '8px',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         borderRadius: '50%',
         position: 'fixed',
         pointerEvents: 'none', // Prevents cursor from blocking other elements
