@@ -26,11 +26,11 @@ const Hero2 = () => {
     <div>
     
    
-    <div className="relative h-screen overflow-hidden bg-gray-900">
-      {/* Background Image */}
+    <div className="relative h-screen overflow-hidden">
+      
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat "
-
+         style={{ backgroundImage: `url(${back})` }}
       ></div>
 
       <div className="relative h-full flex flex-col items-center justify-center px-4 py-6 md:px-6 lg:px-8 lg:py-12 text-center">
@@ -44,7 +44,7 @@ const Hero2 = () => {
             Making life better with
           </h4>
 
-          <h1 className="text-5xl  md:text-7xl lg:text-9xl font-outfit  text-white dark:text-white mb-4">
+          <h1 className="text-5xl  md:text-7xl lg:text-9xl font-outfit dark:text-white mb-4">
             eliteFocus<sup className="text-2xl md:text-4xl align-super">™</sup>
           </h1>
 
