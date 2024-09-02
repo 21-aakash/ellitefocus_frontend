@@ -3,6 +3,11 @@ import back from '../assets/logo.jpg'; // Import your background image
 import st from "../assets/st.png"
 import graph from "../assets/graph.png"
 import { useNavigate } from "react-router-dom";
+import testimonialImage1 from "../assets/kushagra.jpeg"; // Example image import
+import testimonialImage2 from "../assets/sid.jpeg"; // Another example image import
+import testimonialImage3 from "../assets/prachi.jpeg"; // Example image import
+import testimonialImage4 from "../assets/leena.jpeg"; // Another example image import
+
 
 const Hero2 = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -109,7 +114,45 @@ const Hero2 = () => {
       </div>
     </div>
 
+ {/* Testimonials Section */}
+  <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+    <div className="flex flex-col md:flex-row items-center text-center md:text-left p-6 bg-white shadow-lg rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <img src={testimonialImage1} alt="" className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6" />
+      <div>
+        <p className="text-lg italic text-gray-700">"If procrastination was an Olympic sport, this app would make me retire!"</p>
+        <p className="mt-4 text-sm font-semibold text-gray-900">Kushagra Jain</p>
+        <p className="text-sm text-gray-500">Co-founder, Xolve</p>
+      </div>
+    </div>
 
+    <div className="flex flex-col md:flex-row items-center text-center md:text-left p-6 bg-white shadow-lg rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <img src={testimonialImage2} alt="" className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6" />
+      <div>
+        <p className="text-lg italic text-gray-700">"This app made me so organized, my mom is now asking it for tips!"</p>
+        <p className="mt-4 text-sm font-semibold text-gray-900">Siddhart Verma</p>
+        <p className="text-sm text-gray-500">Senior Product Manager, Maximus</p>
+      </div>
+    </div>
+
+    <div className="flex flex-col md:flex-row items-center text-center md:text-left p-6 bg-white shadow-lg rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <img src={testimonialImage3} alt="" className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6" />
+      <div>
+        <p className="text-lg italic text-gray-700">"This app is like coffee for my productivity—can't function without it!"</p>
+        <p className="mt-4 text-sm font-semibold text-gray-900">Prachi Gupta</p>
+        <p className="text-sm text-gray-500">CEO, Inscribe</p>
+      </div>
+    </div>
+
+    <div className="flex flex-col md:flex-row items-center text-center md:text-left p-6 bg-white shadow-lg rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      <img src={testimonialImage4} alt="" className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6" />
+      <div>
+        <p className="text-lg italic text-gray-700">"This app has completely transformed the way I manage my tasks. I can’t imagine my life without it now!"</p>
+        <p className="mt-4 text-sm font-semibold text-gray-900">Leena Ghatiya</p>
+        <p className="text-sm text-gray-500">Senior SDE @Atlassian</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <footer className="bg-gray-900 text-white p-8 ">
