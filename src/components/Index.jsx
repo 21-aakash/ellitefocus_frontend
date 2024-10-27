@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
-const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+const API_BASE_URL = "https://joyful-stillness-production.up.railway.app"; // Define API_BASE_URL here
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
