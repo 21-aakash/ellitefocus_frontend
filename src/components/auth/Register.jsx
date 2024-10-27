@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
-const API_BASE_URL = "https://ellitefocus-backend-production.up.railway.app"; // Define API_BASE_URL here
+const API_BASE_URL = "https://joyful-stillness-production.up.railway.app"; // Define API_BASE_URL here
 
 function Register() {
   const [name, setName] = useState('');
